@@ -15,12 +15,12 @@
 class TriangleManager : public Singleton<TriangleManager> {
 public:
     enum class FILTER {
-        DEFAULT                 = 0,
-        GRAY                    = 1,
-        COOL                    = 2,
-        WARM                    = 3,
-        BLUR                    = 4,
-        MAGNIFIER               = 5
+        DEFAULT                 = 0,    // 默认
+        GRAY                    = 1,    // 黑白
+        COOL                    = 2,    // 冷色调
+        WARM                    = 3,    // 暖色调
+        BLUR                    = 4,    // 模糊
+        MAGNIFIER               = 5     // 放大镜
     };
 
 public:
@@ -51,6 +51,7 @@ private:
     GLint                       _sampler2DLoc;
     GLint                       _filterModeLoc;
     GLint                       _changeColorLoc;
+    GLint                       _weightMagnLoc;
     glm::mat4                   _mvpMatrix;
     glm::mat4                   _modelMatrix;
     glm::mat4                   _viewMatrix;
@@ -64,4 +65,5 @@ private:
     const float                 _blurFilter[3] = { 0.006f, 0.004f, 0.002f };
     const float                 _magnFilter[3] = { 0.0f, 0.0f, 0.4f };
     float                       _filterColor[3];
+    float                       _mWeightManifier;
 };

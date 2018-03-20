@@ -21,6 +21,7 @@ TriangleManager::TriangleManager()
     , _sampler2DLoc(-1)
     , _filterModeLoc(-1)
     , _changeColorLoc(-1)
+    , _weightMagnLoc(-1)
     , _mvpMatrix(glm::mat4(1.0f))
     , _modelMatrix(glm::mat4(1.0f))
     , _viewMatrix(glm::mat4(1.0f))
@@ -28,6 +29,7 @@ TriangleManager::TriangleManager()
     , _bmpBuffer(nullptr)
     , _filterMode(FILTER::DEFAULT)
     , _filterColor{0.0f}
+    , _mWeightManifier(0.0f)
 {
 }
 
@@ -67,6 +69,7 @@ void TriangleManager::initGL(int widgetWidth, int widgetHeight) {
         _sampler2DLoc       = glGetUniformLocation(_sProgramPlay,   "u_Texture");
         _filterModeLoc      = glGetUniformLocation(_sProgramPlay,   "u_FilterMode");
         _changeColorLoc     = glGetUniformLocation(_sProgramPlay,   "u_ChangeColor");
+        _weightMagnLoc      = glGetUniformLocation(_sProgramPlay,   "u_Weight");
         GLfloat vertices[]  = {
             -0.5f, -0.5f, 0.0f, 0.0f, 1.0f, // 1
              0.5f, -0.5f, 0.0f, 1.0f, 1.0f, // 2
@@ -126,6 +129,7 @@ void TriangleManager::drawFrame() {
 
     glUniform1i(_filterModeLoc, (int)_filterMode);
     glUniform3fv(_changeColorLoc, 1, _filterColor);
+    glUniform1i(_weightMagnLoc, _mWeightManifier);
 
     // 启用纹理单元 绑定纹理对象
     glActiveTexture(GL_TEXTURE0);
@@ -139,6 +143,7 @@ void TriangleManager::drawFrame() {
 void TriangleManager::onChange(int widgetWidth, int widgetHeight) {
     _widgetWidth        = widgetWidth;
     _widgetHeight       = widgetHeight;
+    _mWeightManifier    = (float)_widgetWidth / _widgetHeight;
     _modelMatrix	    = glm::scale(glm::mat4(1.0f), glm::vec3(2.0f, 2.0f, 2.0f));
     _viewMatrix         = glm::lookAt(glm::vec3(0, 0, 5), glm::vec3(0, 0, -1), glm::vec3(0, 1, 0));
     _projectionMatrix   = glm::perspective(glm::radians(45.0f), static_cast<float>(_widgetWidth) / static_cast<float>(_widgetHeight), 0.1f, 100.0f);
@@ -151,42 +156,36 @@ void TriangleManager::setFilterMode(FILTER filterMode) {
         {
             _filterMode = FILTER::DEFAULT;
             memcpy(_filterColor, _defaultFilter, 3 * sizeof(float));
-            LOGE("00000000000000000000000");
         }
         break;
         case FILTER::GRAY:
         {
             _filterMode = FILTER::GRAY;
             memcpy(_filterColor, _grayFilter, 3 * sizeof(float));
-            LOGE("1111111111111111111111");
         }
         break;
         case FILTER::COOL:
         {
             _filterMode = FILTER::COOL;
             memcpy(_filterColor, _coolFilter, 3 * sizeof(float));
-            LOGE("2222222222222222222222");
         }
         break;
         case FILTER::WARM:
         {
             _filterMode = FILTER::WARM;
             memcpy(_filterColor, _warmFilter, 3 * sizeof(float));
-            LOGE("3333333333333333333333");
         }
         break;
         case FILTER::BLUR:
         {
             _filterMode = FILTER::BLUR;
             memcpy(_filterColor, _blurFilter, 3 * sizeof(float));
-            LOGE("44444444444444444444444");
         }
         break;
         case FILTER::MAGNIFIER:
         {
             _filterMode = FILTER::MAGNIFIER;
             memcpy(_filterColor, _magnFilter, 3 * sizeof(float));
-            LOGE("5555555555555555555555");
         }
         break;
     }
