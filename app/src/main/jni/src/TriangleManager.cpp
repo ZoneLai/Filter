@@ -145,8 +145,8 @@ void TriangleManager::onChange(int widgetWidth, int widgetHeight) {
     _widgetHeight       = widgetHeight;
     _mWeightManifier    = (float)_widgetWidth / _widgetHeight;
     _modelMatrix	    = glm::scale(glm::mat4(1.0f), glm::vec3(2.0f, 2.0f, 2.0f));
-    _viewMatrix         = glm::lookAt(glm::vec3(0, 0, 5), glm::vec3(0, 0, -1), glm::vec3(0, 1, 0));
-    _projectionMatrix   = glm::perspective(glm::radians(45.0f), static_cast<float>(_widgetWidth) / static_cast<float>(_widgetHeight), 0.1f, 100.0f);
+    _viewMatrix         = glm::lookAt(glm::vec3(0.0f, 0.0f, 6.0f), glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+    _projectionMatrix   = glm::ortho(-1.0f, 1.0f, -(float) widgetHeight / widgetWidth, (float) widgetHeight / widgetWidth, 5.0f, 7.0f);
     _mvpMatrix		    = _projectionMatrix * _viewMatrix * _modelMatrix;
 }
 
