@@ -29,6 +29,8 @@ void main()
     {
         float c         = nColor.r * u_ChangeColor.r + nColor.g * u_ChangeColor.g + nColor.b * u_ChangeColor.b;
         gl_FragColor    = vec4(c, c, c, nColor.a);
+        // float rgb    = nColor.g;   // 方法二
+        // gl_FragColor = vec4(rgb, rgb, rgb, nColor.a);
     }
     else if(u_FilterMode == 2)  // 冷色调
     {

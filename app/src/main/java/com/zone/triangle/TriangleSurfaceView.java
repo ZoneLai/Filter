@@ -23,6 +23,7 @@ public class TriangleSurfaceView extends GLSurfaceView {
         setEGLContextClientVersion(2);
         mRenderer = new TriangleRenderer(context);
         setRenderer(mRenderer);
+//        setRenderMode(GLSurfaceView.RENDERMODE_WHEN_DIRTY);
     }
 
     public void setFilterMode(int filterMode) {
